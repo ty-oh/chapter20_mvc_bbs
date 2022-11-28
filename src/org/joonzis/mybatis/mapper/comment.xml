@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mybatis.mapper.comment"><!-- 경로표기법이 클래스명 표기법처럼 사용 -->
+	<select id="select_all_comment" parameterType="int" resultType="org.joonzis.vo.CVO">
+		select *
+		from comment_t
+		where b_idx=#{b_idx}
+	</select>
+
+	<insert id="insert_comment" parameterType="org.joonzis.vo.CVO">
+		insert into comment_t
+		values(comment_seq.nextval, 
+			   #{writer}, 
+			   #{content}, 
+			   #{pw}, 
+			   #{ip},  
+			   sysdate,
+			   #{b_idx})
+	</insert>
+
+	<delete id="remove_comment" parameterType="int">
+		delete from comment_t
+		where c_idx=#{c_idx}
+	</delete>
+</mapper>

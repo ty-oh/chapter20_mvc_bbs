@@ -3,10 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		location.href = '/chapter20_mvc_bbs/BBSController?cmd=allList';
+	</script>
 </head>
 <body>
-
+	
 </body>
 </html>

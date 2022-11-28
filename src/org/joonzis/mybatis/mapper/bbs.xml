@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mybatis.mapper.bbs"><!-- 경로표기법이 클래스명 표기법처럼 사용 -->
+	<select id="total_record" resultType="int">
+		select count(b_idx)
+		from bbs_t
+	</select>
+
+	<select id="list_bbs" parameterType="map" resultType="org.joonzis.vo.BVO">
+		select *
+		from (select rownum r_num, a.*
+      		  from (select *
+            		from bbs_t
+            		order by b_idx desc) a)
+		where r_num BETWEEN #{begin} and #{end}
+	</select>
+	
+	<select id="one_bbs" parameterType="int" resultType="org.joonzis.vo.BVO">
+		select *
+		from bbs_t
+		where b_idx=#{b_idx}
+	</select>
+	
+	<insert id="insert_bbs" parameterType="org.joonzis.vo.BVO">
+		insert into bbs_t
+		values(bbs_seq.nextval, 
+			   #{writer}, 
+			   #{title}, 
+			   #{content}, 
+			   #{pw}, 
+			   0,
+			   #{ip}, 
+			   #{filename}, 
+			   sysdate)
+	</insert>
+	
+	<delete id="remove_bbs" parameterType="int">
+		delete from bbs_t
+		where b_idx=#{b_idx}
+	</delete>
+	
+	<update id="update_bbs" parameterType="org.joonzis.vo.BVO">
+		update bbs_t
+		set title=#{title},
+			content=#{content},
+			filename=#{filename}
+		where b_idx=#{b_idx}
+	</update>
+	
+</mapper>
