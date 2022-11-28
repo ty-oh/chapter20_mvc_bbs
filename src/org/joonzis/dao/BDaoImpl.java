@@ -38,4 +38,9 @@ public class BDaoImpl implements BDao{
 	public List<BVO> getListBVO(Map<String, Integer> map) {
 		return getSqlSession().selectList("list_bbs", map);
 	}
+	
+	@Override
+	public BVO getBVO(int b_idx) {
+		return getSqlSession().selectOne("one_bbs", b_idx);
+	}
 }

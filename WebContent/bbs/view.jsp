@@ -28,6 +28,34 @@
 			text-align: center;
 		}
 	</style>
+	<script type="text/javascript">
+		var update_page = function(f) {
+			f.action='update_page.jsp';
+			f.submit();
+		}
+		var remove_page = function(f) {
+			f.action='remove_page.jsp';
+			f.submit();
+		}
+		var view_all = function(f) {
+			f.action='index.jsp';
+			f.submit();
+		}
+		var insert_comment= function(f) {
+			f.action='insert_comment.jsp';
+			f.submit();
+		}
+		var remove_comment = function(pw, c_idx, b_idx, currentPage) {
+			var pwCheck = prompt('비밀번호를 입력하세요.');
+			var isPwCorrect = pw == pwCheck;
+			if (!isPwCorrect) {
+				alert('비밀번호가 틀립니다.');
+				return;
+			}
+			
+			location.href='remove_comment.jsp?c_idx=' + c_idx + '&b_idx=' + b_idx + '&currentPage=' + currentPage;
+		}
+	</script>
 </head>
 <body>
 	

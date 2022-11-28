@@ -34,10 +34,11 @@ public class BBSController extends HttpServlet {
 		
 		String cmd = request.getParameter("cmd");
 		String resultCmd = "allList";
+		String currentPage = "";
 		if(cmd != null && !cmd.isEmpty()) {
 			resultCmd = cmd;
 		}
-		
+		System.out.println(resultCmd);
 		// 단순 화면 이동 / 데이터 사용 구분
 		boolean forwardCheck = false;
 		// 이동 경로 path
@@ -58,7 +59,7 @@ public class BBSController extends HttpServlet {
 			pvo.setTotalPage();
 			
 			// 4. 현재 페이지 번호 구하기
-			String currentPage = request.getParameter("currentPage");
+			currentPage = request.getParameter("currentPage");
 			if(currentPage != null && !currentPage.isEmpty()){
 				pvo.setNowPage(Integer.parseInt(currentPage));
 			}
@@ -100,6 +101,18 @@ public class BBSController extends HttpServlet {
 			 */
 			forwardCheck = true;
 			path = "bbs/allList.jsp";
+			break;
+		case "view":
+			int b_idx = Integer.parseInt(request.getParameter("b_idx"));
+			currentPage = request.getParameter("currentPage");
+			BVO bvo = bservice.getBbs(b_idx);
+			//session open .. 추후
+			//수정, 삭제를 위해서 session에 bvo를 저장
+			/* session.setAttribute("bbsInfo", bvo); */
+			/* pageContext.setAttribute("currentPage", currentPage); */
+			request.setAttribute("bbsInfo", bvo);
+			forwardCheck = true;
+			path="bbs/view.jsp";
 			break;
 		}
 		

@@ -8,4 +8,5 @@ import org.joonzis.vo.BVO;
 public interface BDao {
 	public int getTotalRecordCount();
 	public List<BVO> getListBVO(Map<String, Integer> map);
+	public BVO getBVO(int b_idx);
 }

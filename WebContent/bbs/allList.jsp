@@ -90,6 +90,9 @@
 	      font-weight: bold;
 	   }
 	</style>
+	<script type="text/javascript">
+
+	</script>
 </head>
 <body>
 	<div class="wrap">
@@ -116,7 +119,7 @@
 							<c:forEach var="vo" items="${list }">
 								<tr>
 									<td>${vo.b_idx}</td>
-									<td><a class="view" href="view.jsp?b_idx=${vo.b_idx }&currentPage=${pvo.nowPage}">${vo.title}</a></td>
+ 									<td><a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=view&b_idx=${vo.b_idx }&currentPage=${pvo.nowPage}" onclick="viewPage(${vo.b_idx })">${vo.title}</a></td>
 									<td>${vo.writer}</td>
 									<td>${vo.reg_date}</td>
 									<td>${vo.hit}</td>

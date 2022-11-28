@@ -19,4 +19,9 @@ public class BBSServiceImpl implements BBSService{
 	public List<BVO> getList(Map<String, Integer> map) {
 		return bdao.getListBVO(map);
 	}
+	
+	@Override
+	public BVO getBbs(int b_idx) {
+		return bdao.getBVO(b_idx);
+	}
 }
