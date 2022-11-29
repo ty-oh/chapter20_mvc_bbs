@@ -91,13 +91,16 @@
 	   }
 	</style>
 	<script type="text/javascript">
-
+		var insert_page = function(f) {
+			f.action='/chapter20_mvc_bbs/BBSController';
+			f.submit();
+		}
 	</script>
 </head>
 <body>
 	<div class="wrap">
 		<h1>BBS 게시판</h1>
-		<form action="insert_page.jsp">
+		<form>
 			<table>
 				<thead>
 					<tr>
@@ -138,7 +141,7 @@
 										<span class ="disable"> ◀ &nbsp; </span>
 								</c:when>
 								<c:otherwise>
-										<a class="view" href="index.jsp?currentPage=${pvo.beginBlock - 1 }"> ◀ &nbsp; </a>
+										<a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${pvo.beginBlock - 1 }"> ◀ &nbsp; </a>
 								</c:otherwise>
 							</c:choose>		
 							<%-- 2. 페이지 번호 --%>			
@@ -148,7 +151,7 @@
 										<span class="now">${p }&nbsp;</span>
 									</c:when>
 									<c:otherwise>
-										 <a class="view" href="index.jsp?currentPage=${p}"> ${p }&nbsp;</a>
+										 <a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${p}"> ${p }&nbsp;</a>
 									</c:otherwise>
 								</c:choose>	
 							</c:forEach>		
@@ -158,7 +161,7 @@
 									<span class ="disable"> &nbsp;▶ </span>
 								</c:when>
 								<c:otherwise>
-									<a class="view" href="index.jsp?currentPage=${pvo.beginBlock + pvo.pagePerBlock }" > &nbsp;▶ </a>
+									<a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${pvo.beginBlock + pvo.pagePerBlock }" > &nbsp;▶ </a>
 								</c:otherwise>
 							</c:choose>	
 						</td>
@@ -166,7 +169,8 @@
 				</tfoot>
 			</table>
 			<p>
-				<input type="submit" value="게시글 작성">
+				<input type="button" value="게시글 작성" onclick="insert_page(this.form)">
+				<input type="hidden" name="cmd" value="insert_page" />
 			</p>
 		</form>
 	</div>

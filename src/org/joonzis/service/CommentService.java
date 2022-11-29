@@ -1,5 +1,10 @@
 package org.joonzis.service;
 
-public interface CommentService {
+import java.util.List;
 
+import org.joonzis.vo.CVO;
+
+public interface CommentService {
+	public List<CVO> getAllComment(int b_idx);
+	
 }

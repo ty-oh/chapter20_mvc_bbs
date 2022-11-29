@@ -43,4 +43,31 @@ public class BDaoImpl implements BDao{
 	public BVO getBVO(int b_idx) {
 		return getSqlSession().selectOne("one_bbs", b_idx);
 	}
+	
+	@Override
+	public int insertBbs(BVO bvo) {
+		int result = getSqlSession().insert("insert_bbs", bvo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
+	
+	@Override
+	public int updateBbs(BVO bvo) {
+		int result = getSqlSession().update("update_bbs", bvo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
+	
+	@Override
+	public int removeBbs(int b_idx) {
+		int result = getSqlSession().delete("remove_bbs", b_idx);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return 0;
+	}
 }
