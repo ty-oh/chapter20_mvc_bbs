@@ -61,4 +61,13 @@ public class BDaoImpl implements BDao{
 		}
 		return result;
 	}
+	
+	@Override
+	public int removeBbs(int b_idx) {
+		int result = getSqlSession().delete("remove_bbs", b_idx);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return 0;
+	}
 }

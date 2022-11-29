@@ -38,7 +38,10 @@
 			f.submit();
 		}
 		var remove_page = function(f) {
-			f.action='remove_page.jsp';
+			var cmd = document.getElementById('cmd');
+			cmd.setAttribute('value', 'remove_page');
+			
+			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		var view_all = function(f) {

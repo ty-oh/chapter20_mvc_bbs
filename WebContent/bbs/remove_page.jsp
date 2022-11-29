@@ -36,7 +36,7 @@
 				return;
 			}
 			
-			f.action = 'remove.jsp';
+			f.action = '/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		
@@ -70,6 +70,7 @@
 							<div id="btn">
 								<input type="button" value="삭제" onclick="removeBbs(this.form)"/>&nbsp;&nbsp;
 								<input type="button" value="취소" onclick="back()">
+								<input type="hidden" name="cmd" value="remove">
 							</div>
 						</td>
 					</tr>

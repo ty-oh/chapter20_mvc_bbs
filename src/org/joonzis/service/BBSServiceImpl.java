@@ -34,4 +34,9 @@ public class BBSServiceImpl implements BBSService{
 	public int updateBbs(BVO bvo) {
 		return bdao.updateBbs(bvo);
 	}
+	
+	@Override
+	public int removeBbs(int b_idx) {
+		return bdao.removeBbs(b_idx);
+	}
 }

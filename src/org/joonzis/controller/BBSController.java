@@ -71,11 +71,12 @@ public class BBSController extends HttpServlet {
 		CommentService cservice = new CommentServiceImpl();
 		
 		switch(resultCmd) {
+		case "remove_page":
+			path = "bbs/remove_page.jsp";
+			break;
+		
 		case "update_page":
 			path = "bbs/update_page.jsp";
-			forwardCheck = true;
-			currentPage = request.getParameter("currentPage");
-			request.setAttribute("currentPage", currentPage); // 이부분 수정해야함
 			break;
 		
 		case "insert_page":
@@ -193,6 +194,13 @@ public class BBSController extends HttpServlet {
 			 * currentPage = mr.getParameter("currentPage");
 			 * pageContext.setAttribute("currentPage", currentPage);
 			 */
+			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
+			break;
+			
+		case "remove":
+			bvo = (BVO)session.getAttribute("bbsInfo");
+			
+			result = bservice.removeBbs(bvo.getB_idx());
 			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
 			break;
 		}
