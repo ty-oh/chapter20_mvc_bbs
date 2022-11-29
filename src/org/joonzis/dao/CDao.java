@@ -1,5 +1,9 @@
 package org.joonzis.dao;
 
-public interface CDao {
+import java.util.List;
 
+import org.joonzis.vo.CVO;
+
+public interface CDao {
+	List<CVO> selectAllComment(int b_idx);
 }

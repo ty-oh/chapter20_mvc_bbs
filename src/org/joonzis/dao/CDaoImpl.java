@@ -1,7 +1,10 @@
 package org.joonzis.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.joonzis.mybatis.config.DBService;
+import org.joonzis.vo.CVO;
 
 public class CDaoImpl implements CDao{
 	private static CDaoImpl instance = null;
@@ -25,5 +28,8 @@ public class CDaoImpl implements CDao{
 		return sqlsession;
 	}
 	
-	
+	@Override
+	public List<CVO> selectAllComment(int b_idx) {
+		return getSqlSession().selectList("select_all_comment", b_idx);
+	}
 }

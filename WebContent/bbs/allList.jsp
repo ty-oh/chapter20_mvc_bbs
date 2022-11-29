@@ -138,7 +138,7 @@
 										<span class ="disable"> ◀ &nbsp; </span>
 								</c:when>
 								<c:otherwise>
-										<a class="view" href="index.jsp?currentPage=${pvo.beginBlock - 1 }"> ◀ &nbsp; </a>
+										<a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${pvo.beginBlock - 1 }"> ◀ &nbsp; </a>
 								</c:otherwise>
 							</c:choose>		
 							<%-- 2. 페이지 번호 --%>			
@@ -148,7 +148,7 @@
 										<span class="now">${p }&nbsp;</span>
 									</c:when>
 									<c:otherwise>
-										 <a class="view" href="index.jsp?currentPage=${p}"> ${p }&nbsp;</a>
+										 <a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${p}"> ${p }&nbsp;</a>
 									</c:otherwise>
 								</c:choose>	
 							</c:forEach>		
@@ -158,7 +158,7 @@
 									<span class ="disable"> &nbsp;▶ </span>
 								</c:when>
 								<c:otherwise>
-									<a class="view" href="index.jsp?currentPage=${pvo.beginBlock + pvo.pagePerBlock }" > &nbsp;▶ </a>
+									<a class="view" href="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage=${pvo.beginBlock + pvo.pagePerBlock }" > &nbsp;▶ </a>
 								</c:otherwise>
 							</c:choose>	
 						</td>

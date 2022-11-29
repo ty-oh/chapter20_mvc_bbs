@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.joonzis.dao.BDao;
@@ -19,6 +20,7 @@ import org.joonzis.service.BBSServiceImpl;
 import org.joonzis.service.CommentService;
 import org.joonzis.service.CommentServiceImpl;
 import org.joonzis.vo.BVO;
+import org.joonzis.vo.CVO;
 
 @WebServlet("/BBSController")
 public class BBSController extends HttpServlet {
@@ -32,6 +34,7 @@ public class BBSController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
+		HttpSession session = request.getSession();
 		String cmd = request.getParameter("cmd");
 		String resultCmd = "allList";
 		String currentPage = "";
@@ -49,31 +52,21 @@ public class BBSController extends HttpServlet {
 		
 		switch(resultCmd) {
 		case "allList" :
-			// 1. Paging 객체 생성
 			Paging pvo = new Paging();
-			
-			// 2. 전체 게시글의 개수 구하기
 			pvo.setTotalRecord(bservice.recordCount());
-			
-			// 3. 전체 페이지 개수 구하기
 			pvo.setTotalPage();
-			
-			// 4. 현재 페이지 번호 구하기
+
 			currentPage = request.getParameter("currentPage");
 			if(currentPage != null && !currentPage.isEmpty()){
 				pvo.setNowPage(Integer.parseInt(currentPage));
 			}
 			
-			// 5. 현재 페이지 번호에 따른 begin, end 구하기
 			pvo.setBegin( (pvo.getNowPage()-1) * pvo.getRecordPerPage() + 1);
 			pvo.setEnd(pvo.getBegin() + pvo.getRecordPerPage() - 1);
 			
-			//-----------begin, end 사이의 게시글을 DB에서 가져오기
-			// 1. begin, end 변수 저장
 			int begin = pvo.getBegin();
 			int end = pvo.getEnd();
 			
-			// 2. begin, end를 저장하는 Map 생성
 			Map<String, Integer> map = new HashMap<>();
 			map.put("begin", begin);
 			map.put("end", end);
@@ -108,21 +101,21 @@ public class BBSController extends HttpServlet {
 			BVO bvo = bservice.getBbs(b_idx);
 			//session open .. 추후
 			//수정, 삭제를 위해서 session에 bvo를 저장
-			/* session.setAttribute("bbsInfo", bvo); */
-			/* pageContext.setAttribute("currentPage", currentPage); */
+			/* session.setAttribute("currentPage", currentPage); */
 			request.setAttribute("bbsInfo", bvo);
+			List<CVO> cList = cservice.getAllComment(b_idx);
+			request.setAttribute("cList", cList);
+			
 			forwardCheck = true;
 			path="bbs/view.jsp";
 			break;
 		}
-		
 		
 		if(forwardCheck) {
 			request.getRequestDispatcher(path).forward(request, response);
 		}else {
 			response.sendRedirect(path);
 		}
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
