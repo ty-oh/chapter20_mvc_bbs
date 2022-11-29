@@ -32,4 +32,22 @@ public class CDaoImpl implements CDao{
 	public List<CVO> selectAllComment(int b_idx) {
 		return getSqlSession().selectList("select_all_comment", b_idx);
 	}
+	
+	@Override
+	public int insertComment(CVO cvo) {
+		int result = getSqlSession().insert("insert_comment", cvo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
+	
+	@Override
+	public int removeComment(int b_idx) {
+		int result = getSqlSession().delete("remove_comment", b_idx);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
 }

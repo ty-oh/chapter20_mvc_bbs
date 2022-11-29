@@ -2,6 +2,7 @@ package org.joonzis.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +40,12 @@ public class BBSController extends HttpServlet {
 		
 		String realPath = request.getServletContext().getRealPath("/upload");
 		MultipartRequest mr = null;
-		
 		HttpSession session = request.getSession();
+		BBSService bservice = new BBSServiceImpl();
+		CommentService cservice = new CommentServiceImpl();
+		
+		boolean forwardCheck = false;
+		String path = "";
 		
 		String cmd = request.getParameter("cmd");
 		if (cmd == null) {
@@ -55,20 +60,13 @@ public class BBSController extends HttpServlet {
 		}
 		
 		BVO bvo = null;
+		CVO cvo = null;
+		String currentPage = "";
 		
 		String resultCmd = "allList";
-		String currentPage = "";
 		if(cmd != null && !cmd.isEmpty()) {
 			resultCmd = cmd;
 		}
-		System.out.println(resultCmd);
-		// 단순 화면 이동 / 데이터 사용 구분
-		boolean forwardCheck = false;
-		// 이동 경로 path
-		String path = "";
-		
-		BBSService bservice = new BBSServiceImpl();
-		CommentService cservice = new CommentServiceImpl();
 		
 		switch(resultCmd) {
 		case "remove_page":
@@ -134,9 +132,9 @@ public class BBSController extends HttpServlet {
 			currentPage = request.getParameter("currentPage");
 			bvo = bservice.getBbs(b_idx);
 			//session open .. 추후
-			//수정, 삭제를 위해서 session에 bvo를 저장
-			/* session.setAttribute("currentPage", currentPage); */
 			session.setAttribute("bbsInfo", bvo);
+			session.setAttribute("currentPage", currentPage);
+			
 			List<CVO> cList = cservice.getAllComment(b_idx);
 			request.setAttribute("cList", cList);
 			
@@ -151,7 +149,7 @@ public class BBSController extends HttpServlet {
 			bvo.setPw(mr.getParameter("pw"));
 			bvo.setContent(mr.getParameter("content"));
 			bvo.setIp(InetAddress.getLocalHost().getHostAddress());
-			System.out.println(bvo.getWriter());
+
 			if (mr.getFile("filename") != null) {
 				bvo.setFilename(mr.getFilesystemName("filename"));
 			} else {
@@ -159,7 +157,7 @@ public class BBSController extends HttpServlet {
 			}
 			
 			int result = bservice.insertBbs(bvo);
-			/* pageContext.setAttribute("result", result); */
+
 			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
 			break;
 			
@@ -182,7 +180,7 @@ public class BBSController extends HttpServlet {
 					bvo.setFilename("");	// 새 첨부파일 X, 기존 첨부파일 X
 				}
 			}
-			 
+			
 			bvo.setB_idx(Integer.parseInt(mr.getParameter("b_idx")));
 			bvo.setWriter(mr.getParameter("writer"));
 			bvo.setTitle(mr.getParameter("title"));
@@ -190,18 +188,36 @@ public class BBSController extends HttpServlet {
 			
 			result = bservice.updateBbs(bvo);
 			
-			/*
-			 * currentPage = mr.getParameter("currentPage");
-			 * pageContext.setAttribute("currentPage", currentPage);
-			 */
-			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
+			currentPage = mr.getParameter("currentPage");
+			path="/chapter20_mvc_bbs/BBSController?cmd=view&b_idx="+bvo.getB_idx() + "&currentPage=" + currentPage;
 			break;
 			
 		case "remove":
 			bvo = (BVO)session.getAttribute("bbsInfo");
+			currentPage = request.getParameter("currentPage");
 			
 			result = bservice.removeBbs(bvo.getB_idx());
-			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
+			path="/chapter20_mvc_bbs/BBSController?cmd=allList&currentPage="+currentPage;
+			break;
+		
+		case "insert_comment":
+			cvo = new CVO();
+			cvo.setWriter(request.getParameter("writer"));
+			cvo.setContent(request.getParameter("content"));
+			cvo.setPw(request.getParameter("pw"));
+			cvo.setIp(Inet4Address.getLocalHost().getHostAddress());
+			cvo.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+			
+			result = cservice.insertComment(cvo);
+			path= "/chapter20_mvc_bbs/BBSController?cmd=view&b_idx="+cvo.getB_idx();
+			break;
+		
+		case "remove_comment":
+			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
+			b_idx = Integer.parseInt(request.getParameter("b_idx"));
+			
+			result = cservice.removeComment(c_idx);
+			path= "/chapter20_mvc_bbs/BBSController?cmd=view&b_idx="+b_idx;
 			break;
 		}
 		

@@ -13,4 +13,14 @@ public class CommentServiceImpl implements CommentService{
 	public List<CVO> getAllComment(int b_idx) {
 		return cdao.selectAllComment(b_idx);
 	}
+	
+	@Override
+	public int insertComment(CVO cvo) {
+		return cdao.insertComment(cvo);
+	}
+	
+	@Override
+	public int removeComment(int b_idx) {
+		return cdao.removeComment(b_idx);
+	}
 }
