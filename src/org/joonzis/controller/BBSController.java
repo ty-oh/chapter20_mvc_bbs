@@ -118,10 +118,10 @@ public class BBSController extends HttpServlet {
 			request.setAttribute("pvo", pvo);
 			
 			// 4. 게시물이 열린 경우 session에 저장되어야 되는데... 추후 계속
-			String open = (String)session.getAttribute("open"); 
-			if(open != null) {
-				session.removeAttribute("open"); 
-			}
+			/*
+			 * String open = (String)session.getAttribute("open"); if(open != null) {
+			 * session.removeAttribute("open"); }
+			 */
 			
 			forwardCheck = true;
 			path = "bbs/allList.jsp";
@@ -130,8 +130,15 @@ public class BBSController extends HttpServlet {
 		case "view":
 			int b_idx = Integer.parseInt(request.getParameter("b_idx"));
 			currentPage = request.getParameter("currentPage");
+			// 글을 처음 여는 경우 조회수 증가. 1시간동안 중복 조회 안됨.
+			String opened = (String)session.getAttribute("open"+b_idx);
+			if (opened == null) {
+				bservice.updateHit(b_idx);
+				session.setAttribute("open"+b_idx, "open");
+				session.setMaxInactiveInterval(60*60);
+			}
+			
 			bvo = bservice.getBbs(b_idx);
-			//session open .. 추후
 			session.setAttribute("bbsInfo", bvo);
 			session.setAttribute("currentPage", currentPage);
 			

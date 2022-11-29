@@ -12,4 +12,5 @@ public interface BBSService {
 	public int insertBbs(BVO bvo);
 	public int updateBbs(BVO bvo);
 	public int removeBbs(int b_idx);
+	public int updateHit(int b_idx);
 }

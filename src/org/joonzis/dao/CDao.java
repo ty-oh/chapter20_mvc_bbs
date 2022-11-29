@@ -6,6 +6,8 @@ import org.joonzis.vo.CVO;
 
 public interface CDao {
 	public List<CVO> selectAllComment(int b_idx);
+	public int countComment(int b_idx);
 	public int insertComment(CVO cvo); 
 	public int removeComment(int b_idx);
+	public int removeAllComment(int b_idx);
 }
