@@ -70,4 +70,13 @@ public class BDaoImpl implements BDao{
 		}
 		return 0;
 	}
+	
+	@Override
+	public int updateHit(int b_idx) {
+		int result = getSqlSession().update("update_hit", b_idx);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
 }

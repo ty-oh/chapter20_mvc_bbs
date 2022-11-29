@@ -50,4 +50,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where b_idx=#{b_idx}
 	</update>
 	
+	<update id="update_hit" parameterType="int">
+		update bbs_t
+		set hit= hit+1
+		where b_idx=#{b_idx}
+	</update>
 </mapper>

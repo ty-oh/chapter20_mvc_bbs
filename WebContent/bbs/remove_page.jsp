@@ -71,6 +71,7 @@
 								<input type="button" value="삭제" onclick="removeBbs(this.form)"/>&nbsp;&nbsp;
 								<input type="button" value="취소" onclick="back()">
 								<input type="hidden" name="cmd" value="remove">
+								<input type="hidden" name="currentPage" value="${currentPage }">
 							</div>
 						</td>
 					</tr>

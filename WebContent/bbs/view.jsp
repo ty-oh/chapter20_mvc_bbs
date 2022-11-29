@@ -30,37 +30,43 @@
 		}
 	</style>
 	<script type="text/javascript">
+		var cmd;
+		onload = function() {
+			cmd = document.getElementById('cmd');
+		}
+	
 		var update_page = function(f) {
-			var cmd = document.getElementById('cmd');
 			cmd.setAttribute('value', 'update_page'); 
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		var remove_page = function(f) {
-			var cmd = document.getElementById('cmd');
 			cmd.setAttribute('value', 'remove_page');
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		var view_all = function(f) {
-			f.action='/chapter20_mvc_bbs/BBSController?cmd=allList';
+			cmd.setAttribute('value', 'allList');
+			
+			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		var insert_comment= function(f) {
-			f.action='insert_comment.jsp';
+			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
-		var remove_comment = function(pw, c_idx, b_idx, currentPage) {
+		var remove_comment = function(f) {
 			var pwCheck = prompt('비밀번호를 입력하세요.');
-			var isPwCorrect = pw == pwCheck;
+			var isPwCorrect = f.pw.value == pwCheck;
 			if (!isPwCorrect) {
 				alert('비밀번호가 틀립니다.');
 				return;
 			}
 			
-			location.href='remove_comment.jsp?c_idx=' + c_idx + '&b_idx=' + b_idx + '&currentPage=' + currentPage;
+			f.action='/chapter20_mvc_bbs/BBSController';
+			f.submit();
 		}
 	</script>
 </head>
@@ -143,6 +149,7 @@
 							<input type="reset" value="다시 작성">
 							<input type="hidden" name="b_idx" value="${bbsInfo.b_idx }">&nbsp;&nbsp;
 							<input type="hidden" name="currentPage" value="${currentPage }">&nbsp;&nbsp;
+							<input type="hidden" name="cmd" value="insert_comment" />
 						</td>
 					</tr>
 				</tbody>
@@ -151,40 +158,47 @@
 		
  		<br/><br/><br/>
 
-		<form method="post" action="remove_comment.jsp">
-			<table class="viewComment">
-				<thead>
-					<tr>
-						<th id="num">번호</th>
-						<th id="writer">작성자</th>
-						<th id="con">내용</th>
-						<th id="date">작성일</th>
-						<th id="del">삭제</th>						
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${not empty cList }">
-							<c:forEach var="c" items="${cList }">
-								<c:set var="cnt" value="${cnt + 1 }"/>
+		<table class="viewComment">
+			<thead>
+				<tr>
+					<th id="num">번호</th>
+					<th id="writer">작성자</th>
+					<th id="con">내용</th>
+					<th id="date">작성일</th>
+					<th id="del">삭제</th>						
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${not empty cList }">
+						<c:forEach var="c" items="${cList }">
+							<c:set var="cnt" value="${cnt + 1 }"/>
 								<tr>
 									<td>${cnt }</td>
 									<td>${c.writer }</td>
 									<td>${c.content }</td>
 									<td>${c.reg_date }</td>
-									<td><a href="#" onclick="remove_comment(${c.pw}, ${c.c_idx }, ${c.b_idx }, ${currentPage })">삭제</a></td>
+									<td>
+										<form method="post">
+											<input type="button" value="삭제" onclick="remove_comment(this.form)" />
+											<input type="hidden" name="cmd" value="remove_comment">
+											<input type="hidden" name="pw" value="${c.pw}">
+											<input type="hidden" name="b_idx" value="${c.b_idx }">
+											<input type="hidden" name="c_idx" value="${c.c_idx }">
+											<input type="hidden" name="currentPage" value="${currentPage }">
+										</form>
+									</td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="5">댓글이 없습니다.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
-		</form>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5">댓글이 없습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>
