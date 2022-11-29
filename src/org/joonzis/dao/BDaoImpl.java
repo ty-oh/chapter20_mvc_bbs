@@ -52,4 +52,13 @@ public class BDaoImpl implements BDao{
 		}
 		return result;
 	}
+	
+	@Override
+	public int updateBbs(BVO bvo) {
+		int result = getSqlSession().update("update_bbs", bvo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
 }

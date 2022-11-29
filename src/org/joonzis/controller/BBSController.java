@@ -37,12 +37,24 @@ public class BBSController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
-		HttpSession session = request.getSession();
-		String cmd = request.getParameter("cmd");
-		System.out.println(cmd);
-		BVO bvo = null;
-		String realPath = null;
+		String realPath = request.getServletContext().getRealPath("/upload");
 		MultipartRequest mr = null;
+		
+		HttpSession session = request.getSession();
+		
+		String cmd = request.getParameter("cmd");
+		if (cmd == null) {
+			mr = new MultipartRequest(
+					 request,
+					 realPath,
+					 1024*1024*10,
+					 "utf-8",
+					 new DefaultFileRenamePolicy()
+					 );
+			cmd = mr.getParameter("cmd");
+		}
+		
+		BVO bvo = null;
 		
 		String resultCmd = "allList";
 		String currentPage = "";
@@ -132,15 +144,6 @@ public class BBSController extends HttpServlet {
 			break;
 		
 		case "insert":
-			realPath = request.getServletContext().getRealPath("/upload");
-			mr = new MultipartRequest(
-				 request,
-				 realPath,
-				 1024*1024*10,
-				 "utf-8",
-				 new DefaultFileRenamePolicy()
-				 );
-			
 			bvo = new BVO();
 			bvo.setWriter(mr.getParameter("writer"));
 			bvo.setTitle(mr.getParameter("title"));
@@ -159,16 +162,7 @@ public class BBSController extends HttpServlet {
 			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
 			break;
 			
-		case "update":
-			realPath = request.getServletContext().getRealPath("/upload");
-			mr = new MultipartRequest(
-					request,
-					realPath,
-					1024*1024*10,
-					"utf-8",
-					new DefaultFileRenamePolicy()
-					);
-					
+		case "update":			
 			bvo = new BVO();
 			File newfile = mr.getFile("filename");
 			String oldfile = mr.getParameter("oldfile");
@@ -193,12 +187,13 @@ public class BBSController extends HttpServlet {
 			bvo.setTitle(mr.getParameter("title"));
 			bvo.setContent(mr.getParameter("content"));
 			
-			/* int result = BDao.updateBbs(bvo); */
+			result = bservice.updateBbs(bvo);
 			
 			/*
 			 * currentPage = mr.getParameter("currentPage");
 			 * pageContext.setAttribute("currentPage", currentPage);
 			 */
+			path="/chapter20_mvc_bbs/BBSController?cmd=allList";
 			break;
 		}
 		

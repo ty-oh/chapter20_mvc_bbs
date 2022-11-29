@@ -48,11 +48,10 @@
 				return;
 			}
 			
-			f.action='/chapter20_mvc_bbs/BBSController?cmd=insert';
+			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 	</script>
-	
 </head>
 <body>
 	<div>
@@ -86,6 +85,7 @@
 								<input type="button" value="작성 완료" onclick="insert(this.form)"/>&nbsp;&nbsp;
 								<input type="reset" value="다시작성">
 								<input type="button" value="목록으로 이동" onclick="location.href='index.jsp'">
+								<input type="hidden" name="cmd" value="insert" />
 							</div>
 						</td>
 					</tr>

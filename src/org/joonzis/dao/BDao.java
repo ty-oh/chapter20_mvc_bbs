@@ -10,4 +10,5 @@ public interface BDao {
 	public List<BVO> getListBVO(Map<String, Integer> map);
 	public BVO getBVO(int b_idx);
 	public int insertBbs(BVO bvo);
+	public int updateBbs(BVO bvo);
 }

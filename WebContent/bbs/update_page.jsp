@@ -6,36 +6,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<script type="text/javascript">
-		var update = function(f) {
-			if (f.title.value == '') {
-				alert('제목을 입력해주세요.');
-				return;
-			}
-			if (f.pw.value == '') {
-				alert('비밀번호 입력해주세요.');
-				return;
-			}
-			if (f.content.value == '') {
-				alert('내용을 입력해주세요.');
-				return;
-			}
-			
-			var isPwCorrect = f.pw.value == "${bbsInfo.pw}";
-			if (!isPwCorrect) {
-				alert('비밀번호가 맞지 않습니다.');
-				return;
-			}
-			
-			f.action="update.jsp";
-			f.submit();
-		}
-		
-		var view_all = function(f) {
-			f.action='index.jsp';
-			f.submit();
-		}
-	</script>
 	<style type="text/css">
 		div{
 			width: 800px;
@@ -59,6 +29,37 @@
 			text-align: center;
 		}
 	</style>
+	<script type="text/javascript">
+		var update = function(f) {
+			if (f.title.value == '') {
+				alert('제목을 입력해주세요.');
+				return;
+			}
+			if (f.pw.value == '') {
+				alert('비밀번호 입력해주세요.');
+				return;
+			}
+			if (f.content.value == '') {
+				alert('내용을 입력해주세요.');
+				return;
+			}
+			
+			var isPwCorrect = f.pw.value == "${bbsInfo.pw}";
+			if (!isPwCorrect) {
+				alert('비밀번호가 맞지 않습니다.');
+				return;
+			}
+			
+			f.action="/chapter20_mvc_bbs/BBSController";
+			f.submit();
+		}
+		
+		var view_all = function(f) {
+			f.action='index.jsp';
+			f.submit();
+		}
+	</script>
+
 </head>
 <body>
 	<div>

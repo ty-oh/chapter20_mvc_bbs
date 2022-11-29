@@ -29,4 +29,9 @@ public class BBSServiceImpl implements BBSService{
 	public int insertBbs(BVO bvo) {
 		return bdao.insertBbs(bvo);
 	}
+	
+	@Override
+	public int updateBbs(BVO bvo) {
+		return bdao.updateBbs(bvo);
+	}
 }
