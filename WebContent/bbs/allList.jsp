@@ -91,13 +91,16 @@
 	   }
 	</style>
 	<script type="text/javascript">
-
+		var insert_page = function(f) {
+			f.action='/chapter20_mvc_bbs/BBSController';
+			f.submit();
+		}
 	</script>
 </head>
 <body>
 	<div class="wrap">
 		<h1>BBS 게시판</h1>
-		<form action="insert_page.jsp">
+		<form>
 			<table>
 				<thead>
 					<tr>
@@ -166,7 +169,8 @@
 				</tfoot>
 			</table>
 			<p>
-				<input type="submit" value="게시글 작성">
+				<input type="button" value="게시글 작성" onclick="insert_page(this.form)">
+				<input type="hidden" name="cmd" value="insert_page" />
 			</p>
 		</form>
 	</div>

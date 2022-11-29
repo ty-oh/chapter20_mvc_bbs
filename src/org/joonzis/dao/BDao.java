@@ -9,4 +9,5 @@ public interface BDao {
 	public int getTotalRecordCount();
 	public List<BVO> getListBVO(Map<String, Integer> map);
 	public BVO getBVO(int b_idx);
+	public int insertBbs(BVO bvo);
 }

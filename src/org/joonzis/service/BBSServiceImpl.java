@@ -24,4 +24,9 @@ public class BBSServiceImpl implements BBSService{
 	public BVO getBbs(int b_idx) {
 		return bdao.getBVO(b_idx);
 	}
+	
+	@Override
+	public int insertBbs(BVO bvo) {
+		return bdao.insertBbs(bvo);
+	}
 }

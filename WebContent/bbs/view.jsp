@@ -31,7 +31,10 @@
 	</style>
 	<script type="text/javascript">
 		var update_page = function(f) {
-			f.action='update_page.jsp';
+			var cmd = document.getElementById('cmd');
+			cmd.setAttribute('value', 'update_page'); 
+			
+			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
 		var remove_page = function(f) {
@@ -60,7 +63,7 @@
 </head>
 <body>
 	<div>
-		<form action="">		
+		<form>		
 			<h2>${bbsInfo.writer }의 게시글</h2>
 			<table>
 				<tbody>
@@ -106,6 +109,7 @@
 								<input type="button" value="게시글 삭제하기" onclick="remove_page(this.form)">&nbsp;&nbsp;
 								<input type="button" value="목록으로 이동" onclick="view_all(this.form)">
 								<input type="hidden" name="currentPage" value="${currentPage }">
+								<input type="hidden" id="cmd" name="cmd" value="">
 							</div>
 						</td>
 					</tr>
