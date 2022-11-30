@@ -1,5 +1,7 @@
 package org.joonzis.service;
 
+import java.util.Map;
+
 import org.joonzis.dao.MDao;
 import org.joonzis.dao.MDaoImpl;
 import org.joonzis.vo.MVO;
@@ -15,5 +17,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int joinMember(MVO mvo) {
 		return mdao.insertMember(mvo);
+	}
+	
+	@Override
+	public MVO login(Map<String, String> loginMap) {
+		return mdao.login(loginMap);
 	}
 }

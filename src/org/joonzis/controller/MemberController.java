@@ -1,6 +1,9 @@
 package org.joonzis.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,15 +34,36 @@ public class MemberController extends HttpServlet {
 		boolean forwardCheck = false;
 		MemberService mservice = new MemberServiceImpl();
 
+		String id;
+		String pw;
 		int result;
 		
 		switch (cmd) {
+		case "login_page":
+			path="bbs/login_page.jsp";
+			break;
+			
 		case "join_member_page":
 			path="bbs/join_member_page.jsp";
 			break;
+		
+		case "login":
+			Map<String, String> loginMap = new HashMap<String, String>();
+			loginMap.put("id", request.getParameter("id"));
+			loginMap.put("pw", request.getParameter("pw"));
 			
+			MVO userInfo = mservice.login(loginMap);
+			if (userInfo != null) {
+				session.setAttribute("member", userInfo);
+				path="index.jsp";
+			} else {
+				path="index.jsp";
+			}
+			
+			break;
+		
 		case "join_member":
-			String id = request.getParameter("id");
+			id = request.getParameter("id");
 			int idCheck = mservice.idCheck(id);
 
 			if (idCheck == 0) {

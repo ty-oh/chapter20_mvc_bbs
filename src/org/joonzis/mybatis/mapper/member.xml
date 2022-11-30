@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where m_id=#{m_id}
 	</select>
 	
+	<select id="login" parameterType="map" resultType="org.joonzis.vo.MVO">
+		select *
+		from member
+		where m_id=#{id} and m_pw=#{pw}
+	</select>
+	
 	<insert id="insert_member" parameterType="org.joonzis.vo.MVO">
 		insert into member values(
 			m_seq.nextval,

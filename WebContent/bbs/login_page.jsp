@@ -7,8 +7,11 @@
 	<title>Insert title here</title>
 	<style type="text/css">
 		div{
-			width: 800px;
+			width: 400px;
 			margin: auto; 
+		}
+		h2 {
+			margin-top: 100px;
 		}
 		table {
 			width: 100%;
@@ -27,10 +30,33 @@
 		#btn {
 			text-align: center;
 		}
+		#btn input {
+			margin-left: 10px;
+			font-size: 15px;
+			font-color: #0078aa;
+			font-weight: bold;
+			border: 2px solid #0078aa;
+			background-color: white;
+		}
 		.not_null {
 			color: red;
 		}
 	</style>
+	<script type="text/javascript">
+		var login = function(f) {
+			if (f.id.value=='') {
+				alert('아이디를 입력하세요.');
+				return;
+			}
+			if (f.pw .value=='') {
+				alert('아이디를 입력하세요.');
+				return;
+			}
+			
+			f.action = '/chapter20_mvc_bbs/MemberController';
+			f.submit();
+		}
+	</script>
 </head>
 <body>
 	<div>

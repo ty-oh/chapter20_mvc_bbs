@@ -33,6 +33,9 @@
 		var join_member_page = function() {
 			location.href = "/chapter20_mvc_bbs/MemberController?cmd=join_member_page";
 		}
+		var login_page = function() {
+			location.href = "/chapter20_mvc_bbs/MemberController?cmd=login_page";
+		}
 	</script>
 	<header>
 		<div class="member_btn">

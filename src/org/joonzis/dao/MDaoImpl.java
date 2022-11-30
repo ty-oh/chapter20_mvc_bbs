@@ -1,5 +1,7 @@
 package org.joonzis.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.joonzis.mybatis.config.DBService;
 import org.joonzis.vo.MVO;
@@ -34,5 +36,10 @@ public class MDaoImpl implements MDao {
 			getSqlSession().commit();
 		}
 		return result;
+	}
+	
+	@Override
+	public MVO login(Map<String, String> loginMap) {
+		return getSqlSession().selectOne("login", loginMap);
 	}
 }
