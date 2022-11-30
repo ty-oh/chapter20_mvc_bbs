@@ -28,6 +28,14 @@
 		#btn {
 			text-align: center;
 		}
+		input[type="button"],
+		input[type="reset"]  {
+			font-size: 15px;
+			font-color: #0078aa;
+			font-weight: bold;
+			border: 2px solid #0078aa;
+			background-color: white;
+		}
 	</style>
 	<script type="text/javascript">
 		var cmd;
@@ -41,22 +49,26 @@
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var remove_page = function(f) {
 			cmd.setAttribute('value', 'remove_page');
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var view_all = function(f) {
 			cmd.setAttribute('value', 'allList');
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var insert_comment= function(f) {
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var remove_comment = function(f) {
 			var pwCheck = prompt('비밀번호를 입력하세요.');
 			var isPwCorrect = f.pw.value == pwCheck;
@@ -68,9 +80,14 @@
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
+		var join_member_page = function() {
+			location.href = '/chapter20_mvc_bbs/MemberController?cmd=join_member_page';
+		}
 	</script>
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<div>
 		<form>		
 			<h2>${bbsInfo.writer }의 게시글</h2>
@@ -114,49 +131,52 @@
 					<tr>
 						<td colspan="2">
 							<div id="btn">
-								<input type="button" value="게시글 수정하기" onclick="update_page(this.form)"/>&nbsp;&nbsp;
-								<input type="button" value="게시글 삭제하기" onclick="remove_page(this.form)">&nbsp;&nbsp;
+								<c:if test="${bbsInfo.writer eq member.m_id }">
+									<input type="button" value="게시글 수정하기" onclick="update_page(this.form)"/>&nbsp;&nbsp;
+									<input type="button" value="게시글 삭제하기" onclick="remove_page(this.form)">&nbsp;&nbsp;
+								</c:if>
 								<input type="button" value="목록으로 이동" onclick="view_all(this.form)">
 								<input type="hidden" name="currentPage" value="${currentPage }">
 								<input type="hidden" id="cmd" name="cmd" value="">
 							</div>
 						</td>
-					</tr>
+					</tr>					
 				</tbody>
 			</table>
 		</form>
 		
 		<br/><br/><br/>
 
-		<form method="post">
-			<table>
-				<tbody>
-					<tr>
-						<th>댓글 작성자</th>
-						<td><input type="text" name="writer" /></td>
-						<th>비밀번호</th>
-						<td><input type="password" name="pw" /></td>
-					</tr>
-					<tr>
-						<th>댓글 내용 </th>
-						<td colspan="3">
-							<textarea rows="3" cols="80" name="content" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4" id="btn">
-							<input type="button" value="댓글 등록" onclick="insert_comment(this.form)">&nbsp;&nbsp;
-							<input type="reset" value="다시 작성">
-							<input type="hidden" name="b_idx" value="${bbsInfo.b_idx }">&nbsp;&nbsp;
-							<input type="hidden" name="currentPage" value="${currentPage }">&nbsp;&nbsp;
-							<input type="hidden" name="cmd" value="insert_comment" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-		
- 		<br/><br/><br/>
+		<c:if test="${not empty member }">
+			<form method="post">
+				<table>
+					<tbody>
+						<tr>
+							<th>댓글 작성자</th>
+							<td><input type="text" name="writer" value="${member.m_id }" readonly="readonly"/></td>
+							<th>비밀번호</th>
+							<td><input type="password" name="pw" /></td>
+						</tr>
+						<tr>
+							<th>댓글 내용 </th>
+							<td colspan="3">
+								<textarea rows="3" cols="80" name="content" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4" id="btn">
+								<input type="button" value="댓글 등록" onclick="insert_comment(this.form)">&nbsp;&nbsp;
+								<input type="reset" value="다시 작성">
+								<input type="hidden" name="b_idx" value="${bbsInfo.b_idx }">&nbsp;&nbsp;
+								<input type="hidden" name="currentPage" value="${currentPage }">&nbsp;&nbsp;
+								<input type="hidden" name="cmd" value="insert_comment" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+ 			<br/><br/><br/>
+		</c:if>
 
 		<table class="viewComment">
 			<thead>
@@ -180,12 +200,14 @@
 									<td>${c.reg_date }</td>
 									<td>
 										<form method="post">
-											<input type="button" value="삭제" onclick="remove_comment(this.form)" />
-											<input type="hidden" name="cmd" value="remove_comment">
-											<input type="hidden" name="pw" value="${c.pw}">
-											<input type="hidden" name="b_idx" value="${c.b_idx }">
-											<input type="hidden" name="c_idx" value="${c.c_idx }">
-											<input type="hidden" name="currentPage" value="${currentPage }">
+											<c:if test="${c.writer eq member.m_id }">
+												<input type="button" value="삭제" onclick="remove_comment(this.form)" />
+												<input type="hidden" name="cmd" value="remove_comment">
+												<input type="hidden" name="pw" value="${c.pw}">
+												<input type="hidden" name="b_idx" value="${c.b_idx }">
+												<input type="hidden" name="c_idx" value="${c.c_idx }">
+												<input type="hidden" name="currentPage" value="${currentPage }">												
+											</c:if>
 										</form>
 									</td>
 								</tr>

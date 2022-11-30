@@ -27,7 +27,14 @@
 		#btn {
 			text-align: center;
 		}
-		
+		input[type="button"],
+		input[type="reset"]  {
+			font-size: 15px;
+			font-color: #0078aa;
+			font-weight: bold;
+			border: 2px solid #0078aa;
+			background-color: white;
+		}
 	</style>
 	<script type="text/javascript">
 		var insert = function(f) {
@@ -61,7 +68,7 @@
 				<tbody>
 					<tr>
 						<th>작성자</th>
-						<td><input type="text" name="writer" size="80" /></td>
+						<td><input type="text" name="writer" value="${member.m_id }" size="80" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>제목</th>

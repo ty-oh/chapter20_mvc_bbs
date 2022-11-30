@@ -117,12 +117,6 @@ public class BBSController extends HttpServlet {
 			// 3. 화면에서 페이징 사용할 수 있도록 객체에 저장
 			request.setAttribute("pvo", pvo);
 			
-			// 4. 게시물이 열린 경우 session에 저장되어야 되는데... 추후 계속
-			/*
-			 * String open = (String)session.getAttribute("open"); if(open != null) {
-			 * session.removeAttribute("open"); }
-			 */
-			
 			forwardCheck = true;
 			path = "bbs/allList.jsp";
 			break;
