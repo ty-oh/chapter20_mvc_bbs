@@ -36,13 +36,19 @@
 		var login_page = function() {
 			location.href = "/chapter20_mvc_bbs/MemberController?cmd=login_page";
 		}
+		var logout = function() {
+			location.href = "/chapter20_mvc_bbs/MemberController?cmd=logout";
+		}
+		var update_member_page = function() {
+			location.href = "/chapter20_mvc_bbs/MemberController?cmd=update_member_page";
+		}
 	</script>
 	<header>
 		<div class="member_btn">
 			<c:choose>
 				<c:when test="${not empty member}">
-					<input type="button" value="로그아웃" onclick="">
-					<input type="button" value="회원정보" onclick="">
+					<input type="button" value="로그아웃" onclick="logout()">
+					<input type="button" value="회원정보" onclick="update_member_page()">
 				</c:when>
 				<c:otherwise>
 					<input type="button" value="로그인" onclick="login_page()">

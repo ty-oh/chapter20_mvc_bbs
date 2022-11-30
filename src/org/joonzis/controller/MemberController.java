@@ -47,21 +47,25 @@ public class MemberController extends HttpServlet {
 			path="bbs/join_member_page.jsp";
 			break;
 		
+		case "update_member_page":
+			path="bbs/update_member_page.jsp";
+			break;
+			
 		case "login":
 			Map<String, String> loginMap = new HashMap<String, String>();
 			loginMap.put("id", request.getParameter("id"));
 			loginMap.put("pw", request.getParameter("pw"));
 			
 			MVO userInfo = mservice.login(loginMap);
-			if (userInfo != null) {
-				session.setAttribute("member", userInfo);
-				path="index.jsp";
-			} else {
-				path="index.jsp";
-			}
-			
+			session.setAttribute("member", userInfo);
+			path="bbs/login.jsp";
 			break;
 		
+		case "logout":
+			session.removeAttribute("member");
+			path="index.jsp";
+			break;
+			
 		case "join_member":
 			id = request.getParameter("id");
 			int idCheck = mservice.idCheck(id);
@@ -76,7 +80,6 @@ public class MemberController extends HttpServlet {
 				result = mservice.joinMember(mvo);
 
 				path="bbs/login_page.jsp";
-				
 			} else {
 				path="bbs/join_fail.jsp";
 			}
