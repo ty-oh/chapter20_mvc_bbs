@@ -98,6 +98,7 @@
 	</script>
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<div class="wrap">
 		<h1>BBS 게시판</h1>
 		<form>

@@ -27,7 +27,6 @@
 		#btn {
 			text-align: center;
 		}
-		
 	</style>
 	<script type="text/javascript">
 		var insert = function(f) {

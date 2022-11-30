@@ -41,22 +41,26 @@
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var remove_page = function(f) {
 			cmd.setAttribute('value', 'remove_page');
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var view_all = function(f) {
 			cmd.setAttribute('value', 'allList');
 			
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var insert_comment= function(f) {
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
 		var remove_comment = function(f) {
 			var pwCheck = prompt('비밀번호를 입력하세요.');
 			var isPwCorrect = f.pw.value == pwCheck;
@@ -68,9 +72,14 @@
 			f.action='/chapter20_mvc_bbs/BBSController';
 			f.submit();
 		}
+		
+		var join_member_page = function() {
+			location.href = '/chapter20_mvc_bbs/MemberController?cmd=join_member_page';
+		}
 	</script>
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<div>
 		<form>		
 			<h2>${bbsInfo.writer }의 게시글</h2>
