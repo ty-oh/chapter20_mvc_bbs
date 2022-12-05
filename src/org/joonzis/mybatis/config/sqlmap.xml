@@ -18,9 +18,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</environments>
 	
 	<mappers>
-        <mapper resource="org/joonzis/mybatis/mapper/bbs.xml"/>
-        <mapper resource="org/joonzis/mybatis/mapper/comment.xml"/>
-        <mapper resource="org/joonzis/mybatis/mapper/member.xml"/>
+        <mapper resource="shop/gigabox/mybatis/mapper/movie.xml"/>
 	</mappers>
 	
 </configuration>
